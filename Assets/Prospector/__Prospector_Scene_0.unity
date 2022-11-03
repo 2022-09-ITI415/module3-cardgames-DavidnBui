@@ -240,7 +240,15 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0.019607844}
+<<<<<<< HEAD
+<<<<<<< HEAD
+  m_BackGroundColor: {r: 0.26377708, g: 0.5471698, b: 0.07484871, a: 0.019607844}
+=======
+  m_BackGroundColor: {r: 0.40074396, g: 1, b: 0, a: 0.019607844}
+>>>>>>> 1bab2da50a4b8e2d33d5c09c3567824d8ec48ea2
+=======
+  m_BackGroundColor: {r: 0.40074396, g: 1, b: 0, a: 0.019607844}
+>>>>>>> 1bab2da50a4b8e2d33d5c09c3567824d8ec48ea2
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -360,7 +368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7d7d9d9d58522f4cb96693ace07ad24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deckXML: {fileID: 4900000, guid: c76312a0fb08948699e1abf935e4a957, type: 3}
+  deck2XML: {fileID: 4900000, guid: 9a02eb5e71ccbd848a69d273f05b37d3, type: 3}
   layoutXML: {fileID: 4900000, guid: 61f3f05951a2f4d98b35bddbc7549908, type: 3}
   xOffset: 3
   yOffset: -2.5
