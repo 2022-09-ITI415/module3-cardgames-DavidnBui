@@ -11,7 +11,7 @@ public class Prospector : MonoBehaviour
 	static public Prospector S;
 
 	[Header("Set in Inspector")]
-	public TextAsset deck2XML;
+	public TextAsset deckXML;
 	public TextAsset layoutXML;
 	public float xOffset = 3;
 	public float yOffset = -2.5f;
@@ -42,7 +42,7 @@ public class Prospector : MonoBehaviour
 	{
 		Scoreboard.S.score = ScoreManager.SCORE;
 		deck = GetComponent<Deck> ();
-		deck.InitDeck (deck2XML.text);
+		deck.InitDeck (deckXML.text);
 		layout = GetComponent<Layout>();
 		layout.ReadLayout(layoutXML.text);
 
