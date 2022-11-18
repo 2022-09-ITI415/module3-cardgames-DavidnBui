@@ -2,11 +2,11 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace nsDeck
+namespace PyramidDeck
 {
 
 
-	public class Deck : MonoBehaviour
+	public class PyramidDeck : MonoBehaviour
 	{
 
 		[Header("Set in Inspector")]
