@@ -9,13 +9,13 @@ public class CardColor : Card
     {
         SpriteRenderer spriteColor;
         spriteColor = GetComponent<SpriteRenderer>();
-        spriteColor.color = new Color(191, 255, 251, 255);
+        spriteColor.color = new Color(255, 255, 255, 255);
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     //public override void OnMouseUpAsButton()

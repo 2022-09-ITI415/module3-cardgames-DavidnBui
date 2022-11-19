@@ -1,8 +1,10 @@
 using System.Collections;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[System.Serializable] //Makes SlotDefs visible in Unity Inspector
+
 public class SlotDef
 {
     public float x;
@@ -15,16 +17,25 @@ public class SlotDef
     public string type = "slot";
     public Vector2 stagger;
 }
+
+
 public class Layout : MonoBehaviour
 {
-    public PT_XMLReader xmlr;
-    public PT_XMLHashtable xml;
-    public Vector2 multiplier;
-    public List<SlotDef> slotDefs;
-    public SlotDef drawPile;
-    public SlotDef discardPile;
-    public string[] sortingLayerNames = new string[] { "Row0", "Row1", "Row2", "Row3", "Discard", "Draw" };
+    public PT_XMLReader xmlr; //xml reader
+    public PT_XMLHashtable xml; //for faster xml access
+    public Vector2 multiplier; //"offset of tableau's center"
 
+    //SlotDef references
+    public List<SlotDef> slotDefs;  //All SlotDefs for Row0-Row3
+    public SlotDef drawPile;        
+    public SlotDef discardPile;     
+
+    //Holds all of the possible names for layers by layerID
+    public string[] prospectorSortingLayerNames = new string[] { "Row3", "Row2", "Row1", "Row0", "Discard", "Draw" };
+    public string[] sortingLayerNames = new string[] { "Row0", "Row1", "Row2", "Row3", "Row4", "Row5", "Row6", "Row7", "Discard", "Draw" };
+
+
+    //Function reads LayoutXML.xml file
     public void ReadLayout(string xmlText)
     {
         xmlr = new PT_XMLReader();
@@ -34,27 +45,35 @@ public class Layout : MonoBehaviour
         multiplier.x = float.Parse(xml["multiplier"][0].att("x"));
         multiplier.y = float.Parse(xml["multiplier"][0].att("y"));
 
-        SlotDef tSD;
-        PT_XMLHashList slotsX = xml["slot"];
+        SlotDef tSD;                            //Read in the slots
+
+        PT_XMLHashList slotsX = xml["slot"];    //shortcut to the <slot>s
 
         for (int i = 0; i < slotsX.Count; i++)
         {
-            tSD = new SlotDef();
+            tSD = new SlotDef();                //Create a new SlotDef instance
             if (slotsX[i].HasAtt("type"))
             {
-                tSD.type = slotsX[i].att("type");
-            }
-            else
+                tSD.type = slotsX[i].att("type");   //If <slot> has a type attribute, parse
+            } else
             {
-                tSD.type = "slot";
+                tSD.type = "slot";          //If not, set type to "slot"; it's a card in the rows
             }
-
+            //Various attribs parsed into numerical values
             tSD.x = float.Parse(slotsX[i].att("x"));
             tSD.y = float.Parse(slotsX[i].att("y"));
             tSD.layerID = int.Parse(slotsX[i].att("layer"));
-            tSD.layerName = sortingLayerNames[tSD.layerID];
+            if (SceneManager.GetActiveScene().name == "__Prospector_Scene_0")
+            {
+                //Converts number of the layerID into a text layerName
+                tSD.layerName = prospectorSortingLayerNames[tSD.layerID];
+            }
+            if (SceneManager.GetActiveScene().name == "GameScene") {
+                tSD.layerName = sortingLayerNames[tSD.layerID];
+            }
+                //print(tSD.layerName);     Check to see what rows are going through this for loop, should have up to 6 rows.
 
-            switch (tSD.type)
+                switch (tSD.type)   //pull additional attribs based on type of this <slot>
             {
                 case "slot":
                     tSD.faceUp = (slotsX[i].att("faceup") == "1");
@@ -69,15 +88,26 @@ public class Layout : MonoBehaviour
                     }
                     slotDefs.Add(tSD);
                     break;
+
                 case "drawpile":
-                    tSD.stagger.x = float.Parse(slotsX[i].att("xstagger"));
+                    if (SceneManager.GetActiveScene().name == "__Prospector_Scene_0"){
+                        tSD.stagger.x = float.Parse(slotsX[i].att("xstagger"));
+                    }
                     drawPile = tSD;
                     break;
-                case "discardpile":
-                    discardPile = tSD;
-                    break;
+                case "discardpile":                   
+                        discardPile = tSD;                   
+                        break;
             }
         }
+    }
 
+    void Start()
+    {
+        
+    }
+    void Update()
+    {
+        
     }
 }
